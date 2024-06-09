@@ -13,7 +13,7 @@ const port = process.env.PORT || 3001;
 
 // Configurar CORS
 const corsOptions = {
-  origin: '0.0.0.0/0', // Permitir solicitudes solo desde este origen
+  origin: '*', // Permitir solicitudes solo desde este origen
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Permitir el uso de cookies y otros headers de autenticación
   optionsSuccessStatus: 204
