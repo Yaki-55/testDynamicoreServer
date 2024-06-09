@@ -1,8 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes.js'; // Asegúrate de tener estas rutas configuradas correctamente
-import contactRoutes from './routes/contactRoutes.js'; // Asegúrate de tener estas rutas configuradas correctamente
+import userRoutes from './routes/userRoutes.js'; // Asegúrate de que estas rutas existan
+import contactRoutes from './routes/contactRoutes.js'; // Asegúrate de que estas rutas existan
 
 const app = express();
 const port = process.env.PORT || 3000;
