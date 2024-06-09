@@ -13,7 +13,8 @@ const port = process.env.PORT || 3001;
 
 // Configurar CORS
 const corsOptions = {
-  origin: '*', // Permitir solicitudes solo desde este origen
+  //origin: ['http://localhost:5174', 'https://test-dynamicore-client.vercel.app'], // Permitir solicitudes desde estos orígenes
+  origin: ['*'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Permitir el uso de cookies y otros headers de autenticación
   optionsSuccessStatus: 204
@@ -21,6 +22,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Middleware para registrar solicitudes
+app.use((req, res, next) => {
+  console.log(`Request received: ${req.method} ${req.url}`);
+  next();
+});
 
 // Conexión a MongoDB Atlas
 mongoose.connect(process.env.MONGODB_URI, {
