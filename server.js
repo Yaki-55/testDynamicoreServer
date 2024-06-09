@@ -11,20 +11,46 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Middlewares
-app.use(cors());
+// Configurar CORS
+const corsOptions = {
+  origin: '0.0.0.0/0', // Permitir solicitudes solo desde este origen
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Permitir el uso de cookies y otros headers de autenticación
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Conexión a MongoDB Atlas
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000, // 5 segundos de tiempo de espera para la selección del servidor
+  socketTimeoutMS: 45000 // 45 segundos de tiempo de espera para las operaciones
 }).then(() => console.log('Connected to MongoDB Atlas'))
   .catch(err => console.error('Could not connect to MongoDB Atlas', err));
 
 // Rutas
 app.use('/api/users', userRoutes);
 app.use('/api/contacts', contactRoutes);
+
+// Manejo de errores
+app.use((req, res, next) => {
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
