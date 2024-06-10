@@ -13,8 +13,8 @@ const port = process.env.PORT || 3001;
 
 // Configurar CORS
 const corsOptions = {
-  //origin: ['http://localhost:5174', 'https://test-dynamicore-client.vercel.app'], // Permitir solicitudes desde estos orígenes
-  origin: ['*'],
+  origin: ['http://localhost:5174', 'https://test-dynamicore-client.vercel.app'], // Permitir solicitudes desde estos orígenes
+  //origin: ['*'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Permitir el uso de cookies y otros headers de autenticación
   optionsSuccessStatus: 204
